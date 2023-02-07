@@ -35,6 +35,9 @@ final class ToDoViewController: UIViewController, UITableViewDataSource {
         
         // Set the table view data source
         tableView.dataSource = self
+        
+        // Provide sample data
+        toDos = ToDo.loadToDos() ?? ToDo.loadSampleToDos()
     }
     
     

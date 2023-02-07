@@ -55,9 +55,36 @@ struct ToDo: Equatable {
     var notes: String?
     
     
+    // MARK: - Supplu Initial Data
+    
+    /// Load saved previously save to-dos
+    ///
+    /// Each new to-do should be saved on disk. Use this method to retrive those todos back
+    /// - Returns: Saved to-dos if there is any, `nil` otherwise
+    static func loadToDos() -> [ToDo]? {
+        return nil
+    }
+    
+    /// Load sample to-dos for **DEBUG** reasons
+    /// - Returns: Some sample to-dos
+    static func loadSampleToDos() -> [ToDo] {
+        let toDo1 = ToDo(title: "Renew the ID", isComplete: false, dueDate: Date(), notes: "The ID expires next month. I need to buy a form and submit it as soon as I could.")
+        let toDo2 = ToDo(title: "Call my brother", isComplete: false, dueDate: Date(), notes: "Discuss the latest Apple announcements")
+        let toDo3 = ToDo(title: "Read The Swift Programming Language Book", isComplete: false, dueDate: Date())
+        let toDo4 = ToDo(title: "Watch Ted Lasso", isComplete: false, dueDate: Date(), notes: "Watch season 1 and season 2 before season 3 is out")
+        let toDo5 = ToDo(title: "Finish that app", isComplete: false, dueDate: Date(), notes: "Just ship it. No more refinements.")
+        let toDo6 = ToDo(title: "Work at Apple", isComplete: false, dueDate: Date(), notes: "If they can ship those bugs that affects millions, why can't I")
+        let toDo7 = ToDo(title: "Visit all 27 Egypt's governorates", isComplete: false, dueDate: Date())
+        
+        
+        return [toDo1, toDo2, toDo3, toDo4, toDo5, toDo6, toDo7]
+    }
+    
+    
     // MARK: - Equatable conformance
     
     static func ==(lhs: ToDo, rhs: ToDo) -> Bool {
         lhs.id == rhs.id
     }
+    
 }
