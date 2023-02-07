@@ -53,10 +53,19 @@ class ToDoDetailViewController: UITableViewController {
     
     /// Is called after each keyboard tap from the user
     ///
+    /// This method is triggered by the `editing changed` event
     /// Time to check if the textfield is empty so we can update the save button state
     /// - Parameter sender: the `titleTextField` instance
     @IBAction private func textEditingChanged(_ sender: UITextField) {
         updateSaveButtonState()
+    }
+    
+    /// Dismiss the keyboard when the user taps the return button
+    ///
+    /// This method is triggered by the `Primary action triggered` event.
+    /// - Parameter sender: the `titleTextField` instance
+    @IBAction private func returnPressed(_ sender: UITextField) {
+        sender.resignFirstResponder()
     }
     
 }

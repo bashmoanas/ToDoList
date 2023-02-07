@@ -130,6 +130,7 @@
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits"/>
                                                     <connections>
+                                                        <action selector="returnPressed:" destination="g69-XG-12Y" eventType="primaryActionTriggered" id="Dvm-Tv-0Ub"/>
                                                         <action selector="textEditingChanged:" destination="g69-XG-12Y" eventType="editingChanged" id="Lcw-GR-QLM"/>
                                                     </connections>
                                                 </textField>
