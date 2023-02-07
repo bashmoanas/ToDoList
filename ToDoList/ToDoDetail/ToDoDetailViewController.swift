@@ -9,6 +9,16 @@ import UIKit
 
 class ToDoDetailViewController: UITableViewController {
     
+    // MARK: - Outlets
+    
+    @IBOutlet private var titleTextField: UITextField!
+    @IBOutlet private var isCompleteButton: UIButton!
+    @IBOutlet private var dueDateLabel: UILabel!
+    @IBOutlet private var dueDatePicker: UIDatePicker!
+    @IBOutlet private var notesTextView: UITextView!
+    
+    // MARK: - View Life Cycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
