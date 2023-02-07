@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ToDoDetailViewController: UIViewController {
+class ToDoDetailViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
