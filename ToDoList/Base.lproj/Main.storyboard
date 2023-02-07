@@ -64,7 +64,13 @@
                             <constraint firstItem="rrs-4F-vzR" firstAttribute="leading" secondItem="tQt-Dd-R7s" secondAttribute="leading" id="yYR-gF-QNf"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="CMw-HK-wLc"/>
+                    <navigationItem key="navigationItem" id="CMw-HK-wLc">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="KbO-3M-wsQ">
+                            <connections>
+                                <segue destination="KCg-bU-4uD" kind="presentation" id="ofA-2X-L25"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="tableView" destination="rrs-4F-vzR" id="H5U-aB-rkL"/>
                     </connections>
@@ -72,6 +78,52 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gyF-hE-NEh" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="175" y="-13"/>
+        </scene>
+        <!--To Do Detail View Controller-->
+        <scene sceneID="N1r-1Y-MF1">
+            <objects>
+                <viewController id="FO9-SV-byR" customClass="ToDoDetailViewController" customModule="ToDoList" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="AhN-ee-3sa">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="783"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="bMj-lh-y41">
+                                <rect key="frame" x="0.0" y="0.0" width="393" height="783"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            </tableView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="cnV-1U-q1o"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="bMj-lh-y41" firstAttribute="leading" secondItem="AhN-ee-3sa" secondAttribute="leading" id="JLO-Vs-1l6"/>
+                            <constraint firstAttribute="trailing" secondItem="bMj-lh-y41" secondAttribute="trailing" id="VAb-TS-XAJ"/>
+                            <constraint firstAttribute="bottom" secondItem="bMj-lh-y41" secondAttribute="bottom" id="lJE-5x-pQl"/>
+                            <constraint firstItem="bMj-lh-y41" firstAttribute="top" secondItem="AhN-ee-3sa" secondAttribute="top" id="pld-Pv-RFL"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="t7n-nH-UDU"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dSl-sj-1JT" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2060.3053435114502" y="-13.380281690140846"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="e6n-lh-yi2">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="KCg-bU-4uD" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="KcG-dC-5K9">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="56"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="FO9-SV-byR" kind="relationship" relationship="rootViewController" id="ZQl-9S-c2z"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="vhS-Lw-TLk" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1133.5877862595419" y="-13.380281690140846"/>
         </scene>
     </scenes>
     <resources>
