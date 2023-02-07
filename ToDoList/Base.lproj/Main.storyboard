@@ -109,11 +109,37 @@
                             <tableViewSection headerTitle="Basic Information" id="H09-4j-vdc">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="YnG-wa-206">
-                                        <rect key="frame" x="0.0" y="55.333332061767578" width="393" height="43.666667938232422"/>
+                                        <rect key="frame" x="0.0" y="55.333332061767578" width="393" height="56.333332061767578"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="YnG-wa-206" id="kmU-Hs-hQH">
-                                            <rect key="frame" x="0.0" y="0.0" width="393" height="43.666667938232422"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="393" height="56.333332061767578"/>
                                             <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cvM-H3-95m">
+                                                    <rect key="frame" x="20" y="0.0" width="28" height="56.333333333333336"/>
+                                                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                    <state key="normal" image="circle" catalog="system">
+                                                        <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="24"/>
+                                                    </state>
+                                                    <state key="selected" image="checkmark.circle.fill" catalog="system">
+                                                        <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="24"/>
+                                                    </state>
+                                                </button>
+                                                <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Remind me to..." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="3bV-eF-Cw6">
+                                                    <rect key="frame" x="56" y="11" width="317" height="34.333333333333336"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <textInputTraits key="textInputTraits"/>
+                                                </textField>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="bottomMargin" secondItem="3bV-eF-Cw6" secondAttribute="bottom" id="0Ec-ud-PmW"/>
+                                                <constraint firstItem="3bV-eF-Cw6" firstAttribute="top" secondItem="kmU-Hs-hQH" secondAttribute="topMargin" id="7L9-QN-mGz"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="3bV-eF-Cw6" secondAttribute="trailing" id="Bun-vS-EEu"/>
+                                                <constraint firstItem="cvM-H3-95m" firstAttribute="leading" secondItem="kmU-Hs-hQH" secondAttribute="leadingMargin" id="K2o-vR-ycv"/>
+                                                <constraint firstAttribute="bottom" secondItem="cvM-H3-95m" secondAttribute="bottom" id="Uu3-3e-rgR"/>
+                                                <constraint firstItem="3bV-eF-Cw6" firstAttribute="leading" secondItem="cvM-H3-95m" secondAttribute="trailing" constant="8" id="Zfn-pt-jtb"/>
+                                                <constraint firstItem="cvM-H3-95m" firstAttribute="top" secondItem="kmU-Hs-hQH" secondAttribute="top" id="nwU-18-aFD"/>
+                                            </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                 </cells>
@@ -121,7 +147,7 @@
                             <tableViewSection id="drg-4o-yWw">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="x8A-mn-G3r">
-                                        <rect key="frame" x="0.0" y="134.99999809265137" width="393" height="43.666667938232422"/>
+                                        <rect key="frame" x="0.0" y="147.66666221618652" width="393" height="43.666667938232422"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="x8A-mn-G3r" id="D7z-58-ECS">
                                             <rect key="frame" x="0.0" y="0.0" width="393" height="43.666667938232422"/>
@@ -133,7 +159,7 @@
                             <tableViewSection id="Nwe-gZ-HVI">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="cdI-do-G9o">
-                                        <rect key="frame" x="0.0" y="214.66666603088379" width="393" height="43.666667938232422"/>
+                                        <rect key="frame" x="0.0" y="227.33333015441895" width="393" height="43.666667938232422"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="cdI-do-G9o" id="Fg4-OT-B6l">
                                             <rect key="frame" x="0.0" y="0.0" width="393" height="43.666667938232422"/>
@@ -168,6 +194,8 @@
         </scene>
     </scenes>
     <resources>
+        <image name="checkmark.circle.fill" catalog="system" width="128" height="123"/>
+        <image name="circle" catalog="system" width="128" height="123"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
