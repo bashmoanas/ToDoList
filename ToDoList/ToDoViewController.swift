@@ -7,7 +7,18 @@
 
 import UIKit
 
-class ToDoViewController: UIViewController {
+/// Manages the to-dos list views hierarchy
+///
+/// It's main view is a UITableView subclass that shall contain all the user-entered to-dos.
+final class ToDoViewController: UIViewController {
+    
+    // MARK: - Properties
+    
+    /// A list of all the to-dos the user has added to the application
+    private var toDos = [ToDo]()
+    
+    
+    // MARK: - View Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
