@@ -129,6 +129,9 @@
                                                     <rect key="frame" x="56" y="11" width="317" height="34.333333333333336"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits"/>
+                                                    <connections>
+                                                        <action selector="textEditingChanged:" destination="g69-XG-12Y" eventType="editingChanged" id="Lcw-GR-QLM"/>
+                                                    </connections>
                                                 </textField>
                                             </subviews>
                                             <constraints>
@@ -236,6 +239,14 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="dueDateLabel" destination="aka-5z-mrj" id="TqT-gZ-Rr3"/>
+                        <outlet property="dueDatePicker" destination="tZk-lO-owD" id="KTr-3D-Hms"/>
+                        <outlet property="isCompleteButton" destination="cvM-H3-95m" id="4Cm-ET-QhI"/>
+                        <outlet property="notesTextView" destination="ua5-Ks-6WU" id="CdT-Fr-DT8"/>
+                        <outlet property="saveButton" destination="bD2-28-BQl" id="u5v-n8-UBT"/>
+                        <outlet property="titleTextField" destination="3bV-eF-Cw6" id="UPu-62-gEq"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="N5y-nv-iX6" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <exit id="KKY-4a-ikT" userLabel="Exit" sceneMemberID="exit"/>
