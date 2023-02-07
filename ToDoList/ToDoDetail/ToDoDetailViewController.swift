@@ -68,4 +68,12 @@ class ToDoDetailViewController: UITableViewController {
         sender.resignFirstResponder()
     }
     
+    /// Switch the is complete button image based on its state
+    ///
+    /// When selected, a checkmark.circle.fill will be the image; a circle otherwise
+    /// - Parameter sender: the `isCompleteButton` instance
+    @IBAction private func isCompleteButtonTapped(_ sender: UIButton) {
+        isCompleteButton.isSelected.toggle()
+    }
+    
 }
