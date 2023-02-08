@@ -55,6 +55,14 @@ struct ToDo: Equatable, Codable {
     var notes: String?
     
     
+    // MARK: - Static Properties
+    
+    /// Get the documents directory
+    static let documentsDirectory = FileManager.default.urls(for: .userDirectory, in: .userDomainMask).first!
+    
+    /// Create a folder for the ToDo app to store its data.
+    static let archiveURL = documentsDirectory.appending(path: "todos").appendingPathExtension("plist")
+    
     // MARK: - Initialization
     
     /// In order to implement the `Codable` protocol, `id` should not have a default value, or it can be turned into var, or which what is done here have an init and give `id` the default value it needs and keeps the `id` constant
@@ -67,14 +75,30 @@ struct ToDo: Equatable, Codable {
     }
     
     
-    // MARK: - Supplu Initial Data
+    // MARK: - Static Methods
+    
+    /// Save ToDos
+    ///
+    /// Use this method to save the user-eneterd to-dos
+    /// - Note: Must save all to-dos at once. Do not use to save each to-do alone.
+    /// - Parameter toDos: A toDo array you need to save
+    static func save(_ toDos: [ToDo]) {
+        let propertyListEncoder = PropertyListEncoder()
+        let codedToDos = try? propertyListEncoder.encode(toDos)
+        try? codedToDos?.write(to: archiveURL, options: .noFileProtection)
+    }
     
     /// Load saved previously save to-dos
     ///
     /// Each new to-do should be saved on disk. Use this method to retrive those todos back
     /// - Returns: Saved to-dos if there is any, `nil` otherwise
     static func loadToDos() -> [ToDo]? {
-        return nil
+        guard let codedToDos = try? Data(contentsOf: archiveURL) else {
+            return nil
+        }
+        
+        let propertyListDecoder = PropertyListDecoder()
+        return try? propertyListDecoder.decode([ToDo].self, from: codedToDos)
     }
     
     /// Load sample to-dos for **DEBUG** reasons
