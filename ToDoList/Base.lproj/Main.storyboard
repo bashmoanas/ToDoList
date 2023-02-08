@@ -52,7 +52,7 @@
                                             </subviews>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <segue destination="KCg-bU-4uD" kind="presentation" trigger="accessoryAction" id="qZW-DC-vJp"/>
+                                            <segue destination="KCg-bU-4uD" kind="show" id="66v-MW-vFQ"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -87,8 +87,9 @@
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="KCg-bU-4uD" sceneMemberID="viewController">
                     <toolbarItems/>
+                    <navigationItem key="navigationItem" id="GoD-Nz-I5h"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="KcG-dC-5K9">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="56"/>
+                        <rect key="frame" x="0.0" y="59" width="393" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -98,14 +99,14 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vhS-Lw-TLk" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1133.5877862595419" y="-13.380281690140846"/>
+            <point key="canvasLocation" x="1120" y="-13"/>
         </scene>
         <!--To Do Detail View Controller-->
         <scene sceneID="AN4-Sp-phu">
             <objects>
                 <tableViewController id="g69-XG-12Y" customClass="ToDoDetailViewController" customModule="ToDoList" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" estimatedSectionHeaderHeight="-1" sectionFooterHeight="18" estimatedSectionFooterHeight="-1" id="kT7-dD-lMN">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="783"/>
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <sections>
@@ -265,7 +266,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="ofA-2X-L25"/>
+        <segue reference="66v-MW-vFQ"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="checkmark.circle.fill" catalog="system" width="128" height="123"/>

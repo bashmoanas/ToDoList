@@ -58,10 +58,25 @@ class ToDoDetailViewController: UITableViewController {
         // Adjust title size as this is a sub page
         navigationItem.largeTitleDisplayMode = .never
         
+        // Check whether the user ios adding a new to-do or editing an existing one
+        let currentDueDate: Date
+        
+        if let toDo = toDo {
+            // User is editing an existing to-do
+            navigationItem.title = "To-Do"
+            titleTextField.text = toDo.title
+            isCompleteButton.isSelected = toDo.isComplete
+            currentDueDate = toDo.dueDate
+            notesTextView.text = toDo.notes
+        } else {
+            // User is adding a new to-do
+            currentDueDate = Date().addingTimeInterval(24*60*60)
+        }
+        
         // Update due date picker to reflect 1 day from now
-        dueDatePicker.date = Date().addingTimeInterval(24*60*60)
+        dueDatePicker.date = currentDueDate
         // Update the due date label using the current due date picker date
-        updateDueDateLabel(with: dueDatePicker.date)
+        updateDueDateLabel(with: currentDueDate)
         
         // Update the save button state
         updateSaveButtonState()
