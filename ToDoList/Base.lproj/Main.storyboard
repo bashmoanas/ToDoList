@@ -35,23 +35,43 @@
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" estimatedSectionHeaderHeight="-1" sectionFooterHeight="28" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="rrs-4F-vzR">
                                 <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="toDoCellIdentifier" textLabel="SAX-Vp-LmX" style="IBUITableViewCellStyleDefault" id="eWX-8s-BdZ" customClass="ToDoCell" customModule="ToDoList" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="50" width="393" height="43.666667938232422"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="toDoCellIdentifier" id="eWX-8s-BdZ" customClass="ToDoCell" customModule="ToDoList" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="50" width="393" height="49.666667938232422"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="eWX-8s-BdZ" id="zTm-x6-OA7">
-                                            <rect key="frame" x="0.0" y="0.0" width="393" height="43.666667938232422"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="393" height="49.666667938232422"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="SAX-Vp-LmX">
-                                                    <rect key="frame" x="20" y="0.0" width="353" height="43.666667938232422"/>
-                                                    <autoresizingMask key="autoresizingMask"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="0.0"/>
+                                                <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="252" horizontalCompressionResistancePriority="752" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lNM-OJ-xWM">
+                                                    <rect key="frame" x="20" y="11.000000000000002" width="28" height="27.666666666666671"/>
+                                                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                    <state key="normal" image="circle" catalog="system">
+                                                        <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="24"/>
+                                                    </state>
+                                                    <state key="selected" image="checkmark.circle.fill" catalog="system">
+                                                        <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="24"/>
+                                                    </state>
+                                                </button>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CaI-56-5PW">
+                                                    <rect key="frame" x="56" y="11.000000000000002" width="317" height="27.666666666666671"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
+                                            <constraints>
+                                                <constraint firstItem="CaI-56-5PW" firstAttribute="leading" secondItem="lNM-OJ-xWM" secondAttribute="trailing" constant="8" id="4iy-9F-DLa"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="CaI-56-5PW" secondAttribute="bottom" id="9eI-Gz-2YC"/>
+                                                <constraint firstItem="lNM-OJ-xWM" firstAttribute="leading" secondItem="zTm-x6-OA7" secondAttribute="leadingMargin" id="HkD-76-wgY"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="lNM-OJ-xWM" secondAttribute="bottom" id="IdE-lR-JNt"/>
+                                                <constraint firstItem="lNM-OJ-xWM" firstAttribute="top" secondItem="zTm-x6-OA7" secondAttribute="topMargin" id="aGI-n8-JT2"/>
+                                                <constraint firstItem="CaI-56-5PW" firstAttribute="top" secondItem="zTm-x6-OA7" secondAttribute="topMargin" id="apa-ab-g0a"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="CaI-56-5PW" secondAttribute="trailing" id="jSN-oU-eXA"/>
+                                            </constraints>
                                         </tableViewCellContentView>
                                         <connections>
+                                            <outlet property="isCompleteButton" destination="lNM-OJ-xWM" id="1D9-q0-a3z"/>
+                                            <outlet property="titleLabel" destination="CaI-56-5PW" id="716-Sw-7Ek"/>
                                             <segue destination="KCg-bU-4uD" kind="show" id="66v-MW-vFQ"/>
                                         </connections>
                                     </tableViewCell>

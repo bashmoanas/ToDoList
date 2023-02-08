@@ -57,9 +57,7 @@ final class ToDoListViewController: UIViewController, UITableViewDataSource {
         let toDo = toDos[indexPath.row]
         
         // Update the cell content
-        var content = cell.defaultContentConfiguration()
-        content.text = toDo.title
-        cell.contentConfiguration = content
+        cell.update(with: toDo)
         
         // return the cell
         return cell
