@@ -30,8 +30,14 @@ class ToDoDetailViewController: UITableViewController {
         // Adjust title size as this is a sub page
         navigationItem.largeTitleDisplayMode = .never
         
+        // Update due date picker to reflect 1 day from now
+        dueDatePicker.date = Date().addingTimeInterval(24*60*60)
+        // Update the due date label using the current due date picker date
+        updateDueDateLabel(with: dueDatePicker.date)
+        
         // Update the save button state
         updateSaveButtonState()
+        
     }
     
     
@@ -46,6 +52,20 @@ class ToDoDetailViewController: UITableViewController {
     private func updateSaveButtonState() {
         let shouldEnableSaveButton = titleTextField.text?.isEmpty == false
         saveButton.isEnabled = shouldEnableSaveButton
+    }
+    
+    /// Update the due date label based on the to-do date
+    ///
+    /// The due date label value needs to be changed twice:
+    /// - on view did load to reflect the Today date
+    /// - on each scroll on the date wheel, when the user is selecting the date or time
+    ///
+    /// This method updates the date label with a formatted string.
+    /// - Parameter date: the to-do date
+    private func updateDueDateLabel(with date: Date) {
+        dueDateLabel.text = date.formatted(.dateTime
+            .day().month(.defaultDigits).year(.twoDigits)
+            .hour().minute())
     }
     
     
@@ -74,6 +94,14 @@ class ToDoDetailViewController: UITableViewController {
     /// - Parameter sender: the `isCompleteButton` instance
     @IBAction private func isCompleteButtonTapped(_ sender: UIButton) {
         isCompleteButton.isSelected.toggle()
+    }
+    
+    /// Update the date label based on the date picked by the user
+    ///
+    /// This method is triggered by the `valueChanged` event
+    /// - Parameter sender: the `dueDatePicker` instance
+    @IBAction private func datePickerChanged(_ sender: UIDatePicker) {
+        updateDueDateLabel(with: sender.date)
     }
     
 }
