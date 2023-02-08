@@ -51,10 +51,7 @@ class ToDoDetailViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        // set the title
-        title = "New To-Do"
-        
+                
         // Adjust title size as this is a sub page
         navigationItem.largeTitleDisplayMode = .never
         
@@ -160,7 +157,14 @@ class ToDoDetailViewController: UITableViewController {
         let dueDate = dueDatePicker.date
         let notes = notesTextView.text
         
-        toDo = ToDo(title: title, isComplete: isComplete, dueDate: dueDate, notes: notes)
+        if toDo != nil {
+            toDo?.title = title
+            toDo?.isComplete = isComplete
+            toDo?.dueDate = dueDate
+            toDo?.notes = notes
+        } else {
+            toDo = ToDo(title: title, isComplete: isComplete, dueDate: dueDate, notes: notes)
+        }
     }
     
     

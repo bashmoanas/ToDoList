@@ -84,10 +84,15 @@ final class ToDoListViewController: UIViewController, UITableViewDataSource {
         
         let sourceViewController = segue.source as! ToDoDetailViewController
         
-        if let newToDo = sourceViewController.toDo {
-            let newIndexPath = IndexPath(row: toDos.count, section: 0)
-            toDos.append(newToDo)
-            tableView.insertRows(at: [newIndexPath], with: .automatic)
+        if let toDo = sourceViewController.toDo {
+            if let indexOfExisitingToDo = toDos.firstIndex(of: toDo) {
+                toDos[indexOfExisitingToDo] = toDo
+                tableView.reloadRows(at: [IndexPath(row: indexOfExisitingToDo, section: 0)], with: .automatic)
+            } else {
+                let newIndexPath = IndexPath(row: toDos.count, section: 0)
+                toDos.append(toDo)
+                tableView.insertRows(at: [newIndexPath], with: .automatic)
+            }
         }
     }
     
@@ -100,7 +105,7 @@ final class ToDoListViewController: UIViewController, UITableViewDataSource {
         
         guard let cell = sender as? UITableViewCell,
               let indexPath = tableView.indexPath(for: cell)
-        // User tapped the plus button
+                // User tapped the plus button
         else { return toDoDetailViewController }
         
         // User tapped a cell
