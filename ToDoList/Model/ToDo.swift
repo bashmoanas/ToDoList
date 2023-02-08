@@ -10,16 +10,16 @@ import Foundation
 /// A ToDo to keep track of
 ///
 /// A user can mark a ToDo as complete and can pick a due date.
-struct ToDo: Equatable {
+struct ToDo: Equatable, Codable {
     
     // MARK: - Properties
     
     /// A universally unique value to identify each to-do.
     ///
-    /// It's given a default value at initialization so that we do not worry about giving it any values at creation time,
+    /// It's given a default value in the init at initialization so that we do not worry about giving it any values at creation time,
     /// we also don't care about the id having a specific value as long as each to-do has a unique value.
     ///
-    let id: UUID = UUID()
+    let id: UUID
     
     /// The to-do title is how the user identify each to-do
     ///
@@ -53,6 +53,18 @@ struct ToDo: Equatable {
     /// Get milk, chocolate and bananas.
     /// ```
     var notes: String?
+    
+    
+    // MARK: - Initialization
+    
+    /// In order to implement the `Codable` protocol, `id` should not have a default value, or it can be turned into var, or which what is done here have an init and give `id` the default value it needs and keeps the `id` constant
+    init(title: String, isComplete: Bool, dueDate: Date, notes: String? = nil) {
+        self.id = UUID()
+        self.title = title
+        self.isComplete = isComplete
+        self.dueDate = dueDate
+        self.notes = notes
+    }
     
     
     // MARK: - Supplu Initial Data
