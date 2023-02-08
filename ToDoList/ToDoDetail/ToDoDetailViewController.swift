@@ -158,4 +158,16 @@ class ToDoDetailViewController: UITableViewController {
         }
     }
     
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        
+        if indexPath == dateLabelIndexPath {
+            isDatePickerHidden.toggle()
+            
+            // Animate the height changes without reloading the cells
+            tableView.beginUpdates()
+            tableView.endUpdates()
+        }
+    }
+    
 }
