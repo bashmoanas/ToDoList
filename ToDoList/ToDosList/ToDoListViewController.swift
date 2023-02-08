@@ -51,7 +51,7 @@ final class ToDoListViewController: UIViewController, UITableViewDataSource {
         let cellIdentifier = "toDoCellIdentifier"
         
         // Dequeue a cell
-        let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as! ToDoCell
         
         // Get the to-do to display
         let toDo = toDos[indexPath.row]
