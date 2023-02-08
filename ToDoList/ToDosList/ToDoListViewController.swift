@@ -80,7 +80,15 @@ final class ToDoListViewController: UIViewController, UITableViewDataSource {
     // MARK: - Navigation
     
     @IBAction func unwindToToDoListViewController(segue: UIStoryboardSegue) {
+        guard segue.identifier == "saveUnwind" else { return }
         
+        let sourceViewController = segue.source as! ToDoDetailViewController
+        
+        if let newToDo = sourceViewController.toDo {
+            let newIndexPath = IndexPath(row: toDos.count, section: 0)
+            toDos.append(newToDo)
+            tableView.insertRows(at: [newIndexPath], with: .automatic)
+        }
     }
     
 }

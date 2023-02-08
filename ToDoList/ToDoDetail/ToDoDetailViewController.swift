@@ -41,6 +41,11 @@ class ToDoDetailViewController: UITableViewController {
     /// Will use this property to have a fixed height for the notes cell
     private let notesIndexPath = IndexPath(row: 0, section: 2)
     
+    /// The new to-do
+    ///
+    /// It's optional because it doesn't include any values until the user tap the save button
+    var toDo: ToDo?
+    
     
     // MARK: - View Life Cycle
     
@@ -125,6 +130,22 @@ class ToDoDetailViewController: UITableViewController {
     /// - Parameter sender: the `dueDatePicker` instance
     @IBAction private func datePickerChanged(_ sender: UIDatePicker) {
         updateDueDateLabel(with: sender.date)
+    }
+    
+    
+    // MARK: - Navigation
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        super.prepare(for: segue, sender: sender)
+        
+        guard segue.identifier == "saveUnwind" else { return }
+        
+        let title = titleTextField.text!
+        let isComplete = isCompleteButton.isSelected
+        let dueDate = dueDatePicker.date
+        let notes = notesTextView.text
+        
+        toDo = ToDo(title: title, isComplete: isComplete, dueDate: dueDate, notes: notes)
     }
     
     
