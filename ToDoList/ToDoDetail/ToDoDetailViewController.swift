@@ -19,6 +19,29 @@ class ToDoDetailViewController: UITableViewController {
     
     @IBOutlet private var saveButton: UIBarButtonItem!
     
+    
+    // MARK: - Properties
+    
+    /// Track whether the date picker is hidden or not
+    private var isDatePickerHidden = true
+    
+    /// Track the indexPath of the cell **above** the date picker cell
+    ///
+    /// When the user taps this cell, it should toggle the `isDatePickerHidden` property
+    private let dateLabelIndexPath = IndexPath(row: 0, section: 1)
+    
+    /// Track the indexPath of the date picker cell
+    ///
+    /// Use this property to adjust the height of the date picker cell, when it's hidden or shown
+    private let datePickerIndexPath = IndexPath(row: 1, section: 1)
+    
+    /// Track the indexPath of the notes cell
+    ///
+    /// If the notes cell height is determined automatically , the result might vary if the user didn't enter any notes, the cell might appear collapsed and doesn't convey that he can enter notes.
+    /// Will use this property to have a fixed height for the notes cell
+    private let notesIndexPath = IndexPath(row: 0, section: 2)
+    
+    
     // MARK: - View Life Cycle
     
     override func viewDidLoad() {
@@ -102,6 +125,37 @@ class ToDoDetailViewController: UITableViewController {
     /// - Parameter sender: the `dueDatePicker` instance
     @IBAction private func datePickerChanged(_ sender: UIDatePicker) {
         updateDueDateLabel(with: sender.date)
+    }
+    
+    
+    // MARK: - UITableViewDelegate
+    
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        switch indexPath {
+        // the date picker is hidden
+        case datePickerIndexPath where isDatePickerHidden:
+            return 0
+        // the fixed height for the notes cell
+        case notesIndexPath:
+            return 200
+        // the date picker is NOT hidden
+        default:
+            return UITableView.automaticDimension
+        }
+    }
+    
+    /// Providing an estimate of the heigth of rows helps the performance of loading the table view.
+    /// [Apple Documentation](https://developer.apple.com/documentation/uikit/uitableview/1614925-estimatedrowheight)
+    override func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+        switch indexPath {
+        // This estimate is based on the size from the storyboard
+        case datePickerIndexPath:
+            return 216
+        case notesIndexPath:
+            return 200
+        default:
+            return UITableView.automaticDimension
+        }
     }
     
 }
