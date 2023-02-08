@@ -51,6 +51,9 @@
                                                 </label>
                                             </subviews>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <segue destination="KCg-bU-4uD" kind="presentation" trigger="accessoryAction" id="qZW-DC-vJp"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
@@ -90,7 +93,7 @@
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="g69-XG-12Y" kind="relationship" relationship="rootViewController" id="nz8-iO-Ms4"/>
+                        <segue destination="g69-XG-12Y" kind="relationship" relationship="rootViewController" destinationCreationSelector="editToDo:sender:" id="nz8-iO-Ms4"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vhS-Lw-TLk" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -261,6 +264,9 @@
             <point key="canvasLocation" x="1952" y="-13"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="ofA-2X-L25"/>
+    </inferredMetricsTieBreakers>
     <resources>
         <image name="checkmark.circle.fill" catalog="system" width="128" height="123"/>
         <image name="circle" catalog="system" width="128" height="123"/>

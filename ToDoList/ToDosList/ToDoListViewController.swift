@@ -91,4 +91,23 @@ final class ToDoListViewController: UIViewController, UITableViewDataSource {
         }
     }
     
+    /// Navigate to the detail view controller
+    ///
+    /// If the user tap the plus button to add a new to-do, just navigate there,
+    /// if he taps a cell to check the detail of a to-do, pass the tapped to-do to the detail view controller and perform the navigation
+    @IBSegueAction func editToDo(_ coder: NSCoder, sender: Any?) -> ToDoDetailViewController? {
+        let toDoDetailViewController = ToDoDetailViewController(coder: coder)
+        
+        guard let cell = sender as? UITableViewCell,
+              let indexPath = tableView.indexPath(for: cell)
+        // User tapped the plus button
+        else { return toDoDetailViewController }
+        
+        // User tapped a cell
+        tableView.deselectRow(at: indexPath, animated: true)
+        toDoDetailViewController?.toDo = toDos[indexPath.row]
+        
+        return toDoDetailViewController
+    }
+    
 }
