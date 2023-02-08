@@ -10,7 +10,7 @@ import UIKit
 /// Manages the to-dos list views hierarchy
 ///
 /// It's main view is a UITableView subclass that shall contain all the user-entered to-dos.
-final class ToDoListViewController: UIViewController, UITableViewDataSource {
+final class ToDoListViewController: UIViewController, UITableViewDataSource, ToDoCellDelegate {
     
     // MARK: - Outlets
     
@@ -53,6 +53,9 @@ final class ToDoListViewController: UIViewController, UITableViewDataSource {
         // Dequeue a cell
         let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as! ToDoCell
         
+        // Set the delegate
+        cell.delegate = self
+        
         // Get the to-do to display
         let toDo = toDos[indexPath.row]
         
@@ -71,6 +74,18 @@ final class ToDoListViewController: UIViewController, UITableViewDataSource {
         if editingStyle == .delete {
             toDos.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .automatic)
+        }
+    }
+    
+    
+    // MARK: - ToDoCellDelegat
+    
+    func checkmarkTapped(sender: ToDoCell) {
+        if let indexPath = tableView.indexPath(for: sender) {
+            var toDo = toDos[indexPath.row]
+            toDo.isComplete.toggle()
+            toDos[indexPath.row] = toDo
+            tableView.reloadRows(at: [indexPath], with: .automatic)
         }
     }
     
