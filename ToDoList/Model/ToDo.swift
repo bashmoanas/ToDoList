@@ -58,7 +58,7 @@ struct ToDo: Equatable, Codable {
     // MARK: - Static Properties
     
     /// Get the documents directory
-    static let documentsDirectory = FileManager.default.urls(for: .userDirectory, in: .userDomainMask).first!
+    static let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
     
     /// Create a folder for the ToDo app to store its data.
     static let archiveURL = documentsDirectory.appending(path: "todos").appendingPathExtension("plist")

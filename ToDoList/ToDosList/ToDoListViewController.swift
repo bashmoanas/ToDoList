@@ -74,6 +74,7 @@ final class ToDoListViewController: UIViewController, UITableViewDataSource, ToD
         if editingStyle == .delete {
             toDos.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .automatic)
+            ToDo.save(toDos)
         }
     }
     
@@ -86,6 +87,7 @@ final class ToDoListViewController: UIViewController, UITableViewDataSource, ToD
             toDo.isComplete.toggle()
             toDos[indexPath.row] = toDo
             tableView.reloadRows(at: [indexPath], with: .automatic)
+            ToDo.save(toDos)
         }
     }
     
@@ -107,6 +109,8 @@ final class ToDoListViewController: UIViewController, UITableViewDataSource, ToD
                 tableView.insertRows(at: [newIndexPath], with: .automatic)
             }
         }
+        
+        ToDo.save(toDos)
     }
     
     /// Navigate to the detail view controller
