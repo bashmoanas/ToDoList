@@ -34,51 +34,6 @@
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" estimatedSectionHeaderHeight="-1" sectionFooterHeight="28" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="rrs-4F-vzR">
                                 <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
-                                <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="toDoCellIdentifier" id="eWX-8s-BdZ" customClass="ToDoCell" customModule="ToDoList" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="50" width="393" height="50"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="eWX-8s-BdZ" id="zTm-x6-OA7">
-                                            <rect key="frame" x="0.0" y="0.0" width="393" height="50"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="252" horizontalCompressionResistancePriority="752" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lNM-OJ-xWM">
-                                                    <rect key="frame" x="20" y="11" width="28" height="28"/>
-                                                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                    <state key="normal" image="circle" catalog="system">
-                                                        <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="24"/>
-                                                    </state>
-                                                    <state key="selected" image="checkmark.circle.fill" catalog="system">
-                                                        <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="24"/>
-                                                    </state>
-                                                    <connections>
-                                                        <action selector="completeButtonTapped:" destination="eWX-8s-BdZ" eventType="touchUpInside" id="1XV-FD-sFg"/>
-                                                    </connections>
-                                                </button>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CaI-56-5PW">
-                                                    <rect key="frame" x="56" y="11" width="317" height="28"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstItem="CaI-56-5PW" firstAttribute="leading" secondItem="lNM-OJ-xWM" secondAttribute="trailing" constant="8" id="4iy-9F-DLa"/>
-                                                <constraint firstAttribute="bottomMargin" secondItem="CaI-56-5PW" secondAttribute="bottom" id="9eI-Gz-2YC"/>
-                                                <constraint firstItem="lNM-OJ-xWM" firstAttribute="leading" secondItem="zTm-x6-OA7" secondAttribute="leadingMargin" id="HkD-76-wgY"/>
-                                                <constraint firstAttribute="bottomMargin" secondItem="lNM-OJ-xWM" secondAttribute="bottom" id="IdE-lR-JNt"/>
-                                                <constraint firstItem="lNM-OJ-xWM" firstAttribute="top" secondItem="zTm-x6-OA7" secondAttribute="topMargin" id="aGI-n8-JT2"/>
-                                                <constraint firstItem="CaI-56-5PW" firstAttribute="top" secondItem="zTm-x6-OA7" secondAttribute="topMargin" id="apa-ab-g0a"/>
-                                                <constraint firstAttribute="trailingMargin" secondItem="CaI-56-5PW" secondAttribute="trailing" id="jSN-oU-eXA"/>
-                                            </constraints>
-                                        </tableViewCellContentView>
-                                        <connections>
-                                            <outlet property="isCompleteButton" destination="lNM-OJ-xWM" id="1D9-q0-a3z"/>
-                                            <outlet property="titleLabel" destination="CaI-56-5PW" id="716-Sw-7Ek"/>
-                                            <segue destination="KCg-bU-4uD" kind="show" id="66v-MW-vFQ"/>
-                                        </connections>
-                                    </tableViewCell>
-                                </prototypes>
                             </tableView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="zGn-YM-XCS"/>
@@ -93,7 +48,7 @@
                     <navigationItem key="navigationItem" id="CMw-HK-wLc">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="KbO-3M-wsQ">
                             <connections>
-                                <segue destination="KCg-bU-4uD" kind="presentation" id="ofA-2X-L25"/>
+                                <action selector="addToDo:" destination="Cac-zx-ilg" id="2Mj-96-1eg"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -105,29 +60,10 @@
             </objects>
             <point key="canvasLocation" x="175" y="-13"/>
         </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="e6n-lh-yi2">
-            <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="KCg-bU-4uD" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <navigationItem key="navigationItem" id="GoD-Nz-I5h"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="KcG-dC-5K9">
-                        <rect key="frame" x="0.0" y="59" width="393" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="g69-XG-12Y" kind="relationship" relationship="rootViewController" destinationCreationSelector="editToDo:sender:" id="nz8-iO-Ms4"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="vhS-Lw-TLk" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1120" y="-13"/>
-        </scene>
         <!--To Do Detail View Controller-->
         <scene sceneID="AN4-Sp-phu">
             <objects>
-                <tableViewController id="g69-XG-12Y" customClass="ToDoDetailViewController" customModule="ToDoList" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="toDoDetailViewController" id="g69-XG-12Y" customClass="ToDoDetailViewController" customModule="ToDoList" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" estimatedSectionHeaderHeight="-1" sectionFooterHeight="18" estimatedSectionFooterHeight="-1" id="kT7-dD-lMN">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -285,12 +221,9 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="N5y-nv-iX6" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <exit id="KKY-4a-ikT" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="1952" y="-13"/>
+            <point key="canvasLocation" x="985" y="-13"/>
         </scene>
     </scenes>
-    <inferredMetricsTieBreakers>
-        <segue reference="66v-MW-vFQ"/>
-    </inferredMetricsTieBreakers>
     <resources>
         <image name="checkmark.circle.fill" catalog="system" width="128" height="123"/>
         <image name="circle" catalog="system" width="128" height="123"/>

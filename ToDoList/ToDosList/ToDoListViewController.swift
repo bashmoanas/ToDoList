@@ -10,7 +10,7 @@ import UIKit
 /// Manages the to-dos list views hierarchy
 ///
 /// It's main view is a UITableView subclass that shall contain all the user-entered to-dos.
-final class ToDoListViewController: UIViewController, UITableViewDataSource, ToDoCellDelegate {
+final class ToDoListViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, ToDoCellDelegate {
     
     // MARK: - Outlets
     
@@ -27,14 +27,17 @@ final class ToDoListViewController: UIViewController, UITableViewDataSource, ToD
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        tableView.register(ToDoCell.self, forCellReuseIdentifier: ToDoCell.description())
+        
         // Set the title of the navigation item
         title = "My To-Dos"
         
         // Make the title big as this is the main view
         navigationController?.navigationBar.prefersLargeTitles = true
         
-        // Set the table view data source
+        // Set the table view data source and delegate
         tableView.dataSource = self
+        tableView.delegate = self
         
         // Provide sample data
         toDos = ToDo.loadToDos() ?? ToDo.loadSampleToDos()
@@ -48,10 +51,8 @@ final class ToDoListViewController: UIViewController, UITableViewDataSource, ToD
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cellIdentifier = "toDoCellIdentifier"
-        
         // Dequeue a cell
-        let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as! ToDoCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: ToDoCell.description(), for: indexPath) as! ToDoCell
         
         // Set the delegate
         cell.delegate = self
@@ -76,6 +77,20 @@ final class ToDoListViewController: UIViewController, UITableViewDataSource, ToD
             tableView.deleteRows(at: [indexPath], with: .automatic)
             ToDo.save(toDos)
         }
+    }
+    
+    
+    // MARK: - UITableViewDelegate
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        let toDo = toDos[indexPath.row]
+        
+        // Navigate to ToDoDetailViewController
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let toDoDetailViewController = storyboard.instantiateViewController(withIdentifier: "toDoDetailViewController") as! ToDoDetailViewController
+        toDoDetailViewController.toDo = toDo
+        navigationController?.pushViewController(toDoDetailViewController, animated: true)
     }
     
     
@@ -113,23 +128,12 @@ final class ToDoListViewController: UIViewController, UITableViewDataSource, ToD
         ToDo.save(toDos)
     }
     
-    /// Navigate to the detail view controller
-    ///
-    /// If the user tap the plus button to add a new to-do, just navigate there,
-    /// if he taps a cell to check the detail of a to-do, pass the tapped to-do to the detail view controller and perform the navigation
-    @IBSegueAction func editToDo(_ coder: NSCoder, sender: Any?) -> ToDoDetailViewController? {
-        let toDoDetailViewController = ToDoDetailViewController(coder: coder)
+    @IBAction func addToDo(_ sender: UIBarButtonItem) {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let toDoDetailViewController = storyboard.instantiateViewController(withIdentifier: "toDoDetailViewController") as! ToDoDetailViewController
+        let navigationController = UINavigationController(rootViewController: toDoDetailViewController)
         
-        guard let cell = sender as? UITableViewCell,
-              let indexPath = tableView.indexPath(for: cell)
-                // User tapped the plus button
-        else { return toDoDetailViewController }
-        
-        // User tapped a cell
-        tableView.deselectRow(at: indexPath, animated: true)
-        toDoDetailViewController?.toDo = toDos[indexPath.row]
-        
-        return toDoDetailViewController
+        present(navigationController, animated: true)
     }
     
 }
