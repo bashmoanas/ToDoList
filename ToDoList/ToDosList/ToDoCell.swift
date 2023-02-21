@@ -55,6 +55,9 @@ final class ToDoCell: UITableViewCell {
     
     // MARK: - Helper Methods
     
+    /// Configure the cell
+    ///
+    /// This should work as the single path to any UI update for the cell
     private func configureCell() {
         configureStackView()
         configureIsCompleteButton()
@@ -128,17 +131,6 @@ final class ToDoCell: UITableViewCell {
     func update(with toDo: ToDo) {
         titleLabel.text = toDo.title
         isCompleteButton.isSelected = toDo.isComplete
-    }
-    
-    
-    // MARK: - Actions
-    
-    /// This method is triggered once the user tap the `isCompletedButton`
-    /// Once tapped, it will inform its delegate about it, but does nothing else,
-    /// The implementation will be the responsability of the delegate class which should toggle the `isComplete` property of the to-do
-    /// - Parameter sender: the instance of `isCompleteButton`
-    @IBAction private func completeButtonTapped(_ sender: UIButton) {
-        delegate?.checkmarkTapped(sender: self)
     }
     
 }

@@ -10,7 +10,7 @@ import Foundation
 /// A ToDo to keep track of
 ///
 /// A user can mark a ToDo as complete and can pick a due date.
-struct ToDo: Equatable, Codable {
+struct ToDo: Hashable, Codable {
     
     // MARK: - Properties
     
@@ -119,8 +119,24 @@ struct ToDo: Equatable, Codable {
     
     // MARK: - Equatable conformance
     
+    /// Exclude unrelated properties that do not contribute to the equality between two to-dos instances
+    ///
+    /// A to-do = another to only if thei `id`s matches
     static func ==(lhs: ToDo, rhs: ToDo) -> Bool {
         lhs.id == rhs.id
     }
+    
+    
+    // MARK: - Hashable Conformance
+    
+    /// Excludes unrelated properties from contributing to the hash algorithm
+    ///
+    /// Only the `id` is unique to contribute to the hashing algoritm
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+    }
+    
+    
+    static let defaultToDo = ToDo(title: "New Reminder", isComplete: false, dueDate: Date().addingTimeInterval(24*60*60))
     
 }

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3C2856CD299BAC4D00659522 /* DueDatePickerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C2856CC299BAC4D00659522 /* DueDatePickerCell.swift */; };
 		3C4D7C9229926A22003AF12A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C4D7C9129926A22003AF12A /* AppDelegate.swift */; };
 		3C4D7C9429926A22003AF12A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C4D7C9329926A22003AF12A /* SceneDelegate.swift */; };
 		3C4D7C9929926A22003AF12A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3C4D7C9729926A22003AF12A /* Main.storyboard */; };
@@ -16,9 +17,12 @@
 		3C4D7CA829926D6C003AF12A /* ToDo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C4D7CA729926D6C003AF12A /* ToDo.swift */; };
 		3C4D7CAB2992B5FF003AF12A /* ToDoDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C4D7CAA2992B5FF003AF12A /* ToDoDetailViewController.swift */; };
 		3C4D7CAF2994086B003AF12A /* ToDoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C4D7CAE2994086B003AF12A /* ToDoCell.swift */; };
+		3C4F9CB4299E340200C41ED7 /* NotesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C4F9CB3299E340200C41ED7 /* NotesCell.swift */; };
+		3CD95638299ABDC0009FE2AD /* BasicInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CD95637299ABDC0009FE2AD /* BasicInfoCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3C2856CC299BAC4D00659522 /* DueDatePickerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DueDatePickerCell.swift; sourceTree = "<group>"; };
 		3C4D7C8E29926A22003AF12A /* ToDoList.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ToDoList.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3C4D7C9129926A22003AF12A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3C4D7C9329926A22003AF12A /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -30,6 +34,8 @@
 		3C4D7CA729926D6C003AF12A /* ToDo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDo.swift; sourceTree = "<group>"; };
 		3C4D7CAA2992B5FF003AF12A /* ToDoDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoDetailViewController.swift; sourceTree = "<group>"; };
 		3C4D7CAE2994086B003AF12A /* ToDoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoCell.swift; sourceTree = "<group>"; };
+		3C4F9CB3299E340200C41ED7 /* NotesCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesCell.swift; sourceTree = "<group>"; };
+		3CD95637299ABDC0009FE2AD /* BasicInfoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicInfoCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -87,6 +93,9 @@
 		3C4D7CAC2992B604003AF12A /* ToDoDetail */ = {
 			isa = PBXGroup;
 			children = (
+				3CD95637299ABDC0009FE2AD /* BasicInfoCell.swift */,
+				3C2856CC299BAC4D00659522 /* DueDatePickerCell.swift */,
+				3C4F9CB3299E340200C41ED7 /* NotesCell.swift */,
 				3C4D7CAA2992B5FF003AF12A /* ToDoDetailViewController.swift */,
 			);
 			path = ToDoDetail;
@@ -172,9 +181,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				3C4D7C9229926A22003AF12A /* AppDelegate.swift in Sources */,
+				3CD95638299ABDC0009FE2AD /* BasicInfoCell.swift in Sources */,
 				3C4D7CAF2994086B003AF12A /* ToDoCell.swift in Sources */,
 				3C4D7CA629926C07003AF12A /* ToDoListViewController.swift in Sources */,
+				3C2856CD299BAC4D00659522 /* DueDatePickerCell.swift in Sources */,
 				3C4D7C9429926A22003AF12A /* SceneDelegate.swift in Sources */,
+				3C4F9CB4299E340200C41ED7 /* NotesCell.swift in Sources */,
 				3C4D7CAB2992B5FF003AF12A /* ToDoDetailViewController.swift in Sources */,
 				3C4D7CA829926D6C003AF12A /* ToDo.swift in Sources */,
 			);

@@ -87,14 +87,13 @@ final class ToDoListViewController: UIViewController, UITableViewDataSource, UIT
         let toDo = toDos[indexPath.row]
         
         // Navigate to ToDoDetailViewController
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let toDoDetailViewController = storyboard.instantiateViewController(withIdentifier: "toDoDetailViewController") as! ToDoDetailViewController
-        toDoDetailViewController.toDo = toDo
+        let toDoDetailViewController = ToDoDetailViewController(toDo: toDo)
+        toDoDetailViewController.delegate = self
         navigationController?.pushViewController(toDoDetailViewController, animated: true)
     }
     
     
-    // MARK: - ToDoCellDelegat
+    // MARK: - ToDoCellDelegate
     
     func checkmarkTapped(sender: ToDoCell) {
         if let indexPath = tableView.indexPath(for: sender) {
@@ -107,33 +106,35 @@ final class ToDoListViewController: UIViewController, UITableViewDataSource, UIT
     }
     
     
-    // MARK: - Navigation
+    // MARK: - ToDoDetailViewControllerDelegate
     
-    @IBAction func unwindToToDoListViewController(segue: UIStoryboardSegue) {
-        guard segue.identifier == "saveUnwind" else { return }
-        
-        let sourceViewController = segue.source as! ToDoDetailViewController
-        
-        if let toDo = sourceViewController.toDo {
-            if let indexOfExisitingToDo = toDos.firstIndex(of: toDo) {
-                toDos[indexOfExisitingToDo] = toDo
-                tableView.reloadRows(at: [IndexPath(row: indexOfExisitingToDo, section: 0)], with: .automatic)
-            } else {
-                let newIndexPath = IndexPath(row: toDos.count, section: 0)
-                toDos.append(toDo)
-                tableView.insertRows(at: [newIndexPath], with: .automatic)
-            }
+    func didSave(_ toDo: ToDo) {
+        if let indexOfExistingToDo = toDos.firstIndex(of: toDo) {
+            // The user is editing an existing to-do
+            toDos[indexOfExistingToDo] = toDo
+            tableView.reloadRows(at: [IndexPath(row: indexOfExistingToDo, section: 0)], with: .automatic)
+        } else {
+            // The user is adding a new To-Do
+            let newIndexPath = IndexPath(row: toDos.count, section: 0)
+            toDos.append(toDo)
+            tableView.insertRows(at: [newIndexPath], with: .automatic)
         }
         
         ToDo.save(toDos)
     }
     
+    
+    // MARK: - Actions
+    
     @IBAction func addToDo(_ sender: UIBarButtonItem) {
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let toDoDetailViewController = storyboard.instantiateViewController(withIdentifier: "toDoDetailViewController") as! ToDoDetailViewController
+        let toDoDetailViewController = ToDoDetailViewController(toDo: ToDo.defaultToDo)
+        toDoDetailViewController.delegate = self
         let navigationController = UINavigationController(rootViewController: toDoDetailViewController)
         
         present(navigationController, animated: true)
     }
     
 }
+
+
+extension ToDoListViewController: ToDoDetailViewControllerDelegate { }
