@@ -61,6 +61,7 @@ final class ToDoCell: UICollectionViewListCell {
     private func configureCell() {
         configureStackView()
         configureIsCompleteButton()
+        configureTitleLabel()
     }
     
     /// Configure the `stackView`
@@ -73,6 +74,9 @@ final class ToDoCell: UICollectionViewListCell {
         contentView.addSubview(stackView)
         
         stackView.spacing = 8
+        
+        // To align the `iCompleteButton` with the top line of the a multi-line to-do `title`.
+        stackView.alignment = .leading
         
         stackView.addArrangedSubview(isCompleteButton)
         stackView.addArrangedSubview(titleLabel)
@@ -121,6 +125,14 @@ final class ToDoCell: UICollectionViewListCell {
         }
         
         isCompleteButton.addAction(action, for: .primaryActionTriggered)
+    }
+    
+    /// Configure the title label.
+    ///
+    /// The current configuration allows long to-do titles to span over several lines and the prevent the `titleLabel` from overshadowing the `isCompleteButton`.
+    private func configureTitleLabel() {
+        titleLabel.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
+        titleLabel.numberOfLines = 0
     }
     
     
