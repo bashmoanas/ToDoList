@@ -142,13 +142,14 @@ final class BasicInfoCell: UICollectionViewListCell {
     
     /// Configure the `titleTextField`.
     ///
-    /// - Adjusts the border style
-    /// - Add a placeholder text
+    /// - Prevent the textField from sizing itself when the text becomes too long.
     /// - Add a `textField` action for the `editingChanged` event. The action simply inform the delegate that it's `text` property was changed after each keystroke.
     /// - Add another action to dismiss the keyboard when the user taps the return button.
     private func configureTitleTextField() {
         titleTextField.borderStyle = .roundedRect
         titleTextField.placeholder = "Remind me to..."
+        
+        titleTextField.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
         
         let editingChangedAction = UIAction { [self] _ in
             delegate?.didChangeToDoTitle(to: titleTextField.text ?? "")
