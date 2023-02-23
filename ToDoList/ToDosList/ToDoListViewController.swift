@@ -9,12 +9,26 @@ import UIKit
 
 /// Manages the to-dos list views hierarchy
 ///
-/// It's main view is a UITableView subclass that shall contain all the user-entered to-dos.
-final class ToDoListViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, ToDoCellDelegate {
+/// The view controller manages a list of to-dos in a collection view with a list layout. Currenlty the collection view encapsulates all the to-dos in one section.
+final class ToDoListViewController: UIViewController {
     
-    // MARK: - Outlets
+    /// Identifiers for the sections of this collection view.
+    enum Section {
+        /// Currently contains all the items of the collection view.
+        case main
+    }
     
-    @IBOutlet private var tableView: UITableView!
+    // MARK: - UIViews
+    
+    /// A collection view that manages a list of to-dos.
+    private lazy var collectionView = makeCollectionView()
+    
+    /// Prepares the to-dos data and provides it to the collection view.
+    private lazy var dataSource = makeDataSource()
+    
+    /// Add button to allow the user to add new to-dos.
+    private let addButton = UIBarButtonItem(systemItem: .add)
+    
     
     // MARK: - Properties
     
@@ -27,63 +41,133 @@ final class ToDoListViewController: UIViewController, UITableViewDataSource, UIT
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        tableView.register(ToDoCell.self, forCellReuseIdentifier: ToDoCell.description())
+        // Provide sample data
+        toDos = ToDo.loadToDos() ?? ToDo.loadSampleToDos()
         
+        configureView()
+        applySnapshot(animatingDifferences: false)
+    }
+    
+    
+    // MARK: - Helper Methods
+    
+    /// Prepares the View Controller's view for use.
+    ///
+    /// This should be the single path method for initial UI Configurations.
+    private func configureView() {
+        configureNavigationBar()
+        configureAddButton()
+        configureCollectionView()
+    }
+    
+    /// Configure the navigation Bar initial State.
+    private func configureNavigationBar() {
         // Set the title of the navigation item
         title = "My To-Dos"
         
-        // Make the title big as this is the main view
         navigationController?.navigationBar.prefersLargeTitles = true
         
-        // Set the table view data source and delegate
-        tableView.dataSource = self
-        tableView.delegate = self
-        
-        // Provide sample data
-        toDos = ToDo.loadToDos() ?? ToDo.loadSampleToDos()
+        navigationItem.rightBarButtonItem = addButton
     }
     
-    
-    // MARK: - UITableViewDataSource
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        toDos.count
+    /// Add the saving capabilties to the `saveButton`
+    ///
+    /// The saving action just inform the delegate about the changes. The saving mechanism is handled by the parent view controller.
+    ///
+    /// Upon saving, the view controller needs to be dismissed (if the user was adding a new toDo) or popped out (if the user was editing an existing to-do):
+    ///
+    /// - note: I call both `dismiss(animated:completion)` and `popViewController(animated:)`. From my testing one does not affect the other. The `dismiss(animated:completion)` is called by the presenting view controller, so if the view controller was presented using a `UINavigationController` the `dismiss` method does nothing and vice versa.
+    private func configureAddButton() {
+        let action = UIAction { [self] _ in
+            let toDoDetailViewController = ToDoDetailViewController(toDo: ToDo.defaultToDo)
+            toDoDetailViewController.delegate = self
+            let navigationController = UINavigationController(rootViewController: toDoDetailViewController)
+            
+            present(navigationController, animated: true)
+        }
+        
+        addButton.primaryAction = action
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        // Dequeue a cell
-        let cell = tableView.dequeueReusableCell(withIdentifier: ToDoCell.description(), for: indexPath) as! ToDoCell
+    /// Initializes the collection view with a `plain` appearance.
+    ///
+    /// - Add swipe to delete functionality.
+    /// - Returns: a collection view using the list configuration layout.
+    private func makeCollectionView() -> UICollectionView {
+        var configuration = UICollectionLayoutListConfiguration(appearance: .plain)
         
-        // Set the delegate
-        cell.delegate = self
+        // Add swipe to delete
+        configuration.trailingSwipeActionsConfigurationProvider = { indexPath in
+            let deleteAction = UIContextualAction(style: .destructive, title: "Delete") { [self] action, view, completion in
+                var snapshot = dataSource.snapshot()
+                snapshot.deleteItems([toDos[indexPath.item]])
+                dataSource.apply(snapshot)
+                toDos.remove(at: indexPath.item)
+                completion(true)
+                ToDo.save(toDos)
+            }
+            return UISwipeActionsConfiguration(actions: [deleteAction])
+        }
         
-        // Get the to-do to display
-        let toDo = toDos[indexPath.row]
-        
-        // Update the cell content
-        cell.update(with: toDo)
-        
-        // return the cell
-        return cell
+        return UICollectionView(frame: view.bounds, collectionViewLayout: UICollectionViewCompositionalLayout.list(using: configuration))
     }
     
-    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        return true
+    /// Configure the collection View.
+    ///
+    /// - Adds the collection view as a subview.
+    /// - Sets the view controller to be the collection view delegate
+    /// - Apply Collection View's Constraints.
+    private func configureCollectionView() {
+        view.addSubview(collectionView)
+        
+        collectionView.delegate = self
+        
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            collectionView.topAnchor.constraint(equalTo: view.topAnchor),
+            collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        ])
     }
     
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            toDos.remove(at: indexPath.row)
-            tableView.deleteRows(at: [indexPath], with: .automatic)
-            ToDo.save(toDos)
+    private func registerCellForToDo() -> UICollectionView.CellRegistration<ToDoCell, ToDo> {
+        return UICollectionView.CellRegistration<ToDoCell, ToDo> { [self] cell, indexPath, _ in
+            let toDo = toDos[indexPath.row]
+            cell.delegate = self
+            cell.update(with: toDo)
         }
     }
     
+    /// Use the cell registration and return the adequate cell for the data source.
+    /// - Returns: The data source for the collection view
+    private func makeDataSource() -> UICollectionViewDiffableDataSource<Section, ToDo> {
+        let toDoCellRegistration = registerCellForToDo()
+        
+        return UICollectionViewDiffableDataSource<Section, ToDo>(collectionView: collectionView) { collectionView, indexPath, item in
+            return collectionView.dequeueConfiguredReusableCell(using: toDoCellRegistration, for: indexPath, item: item)
+        }
+    }
     
-    // MARK: - UITableViewDelegate
+    /// Apply the current state of data to the view controller's data source at a single point of time.
+    /// - Parameter animatingDifferences: whether to animate the data changes or not depending on the situation.
+    private func applySnapshot(animatingDifferences: Bool = true) {
+        var snapshot = NSDiffableDataSourceSnapshot<Section, ToDo>()
+        snapshot.appendSections([.main])
+        snapshot.appendItems(toDos, toSection: .main)
+        dataSource.apply(snapshot, animatingDifferences: animatingDifferences)
+    }
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
+}
+
+
+// MARK: - CollectionViewDelegate
+
+extension ToDoListViewController: UICollectionViewDelegate {
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        collectionView.deselectItem(at: indexPath, animated: true)
+        
         let toDo = toDos[indexPath.row]
         
         // Navigate to ToDoDetailViewController
@@ -92,49 +176,50 @@ final class ToDoListViewController: UIViewController, UITableViewDataSource, UIT
         navigationController?.pushViewController(toDoDetailViewController, animated: true)
     }
     
-    
-    // MARK: - ToDoCellDelegate
+}
+
+
+// MARK: - ToDoCellDelegate
+
+extension ToDoListViewController: ToDoCellDelegate {
     
     func checkmarkTapped(sender: ToDoCell) {
-        if let indexPath = tableView.indexPath(for: sender) {
-            var toDo = toDos[indexPath.row]
-            toDo.isComplete.toggle()
-            toDos[indexPath.row] = toDo
-            tableView.reloadRows(at: [indexPath], with: .automatic)
+        if let indexPath = collectionView.indexPath(for: sender) {
+            toDos[indexPath.row].isComplete.toggle()
+            
+            let toDo = toDos[indexPath.row]
+            
+            var snapshot = dataSource.snapshot()
+            snapshot.reconfigureItems([toDo])
+            dataSource.apply(snapshot)
+            
             ToDo.save(toDos)
         }
-    }
-    
-    
-    // MARK: - ToDoDetailViewControllerDelegate
-    
-    func didSave(_ toDo: ToDo) {
-        if let indexOfExistingToDo = toDos.firstIndex(of: toDo) {
-            // The user is editing an existing to-do
-            toDos[indexOfExistingToDo] = toDo
-            tableView.reloadRows(at: [IndexPath(row: indexOfExistingToDo, section: 0)], with: .automatic)
-        } else {
-            // The user is adding a new To-Do
-            let newIndexPath = IndexPath(row: toDos.count, section: 0)
-            toDos.append(toDo)
-            tableView.insertRows(at: [newIndexPath], with: .automatic)
-        }
-        
-        ToDo.save(toDos)
-    }
-    
-    
-    // MARK: - Actions
-    
-    @IBAction func addToDo(_ sender: UIBarButtonItem) {
-        let toDoDetailViewController = ToDoDetailViewController(toDo: ToDo.defaultToDo)
-        toDoDetailViewController.delegate = self
-        let navigationController = UINavigationController(rootViewController: toDoDetailViewController)
-        
-        present(navigationController, animated: true)
     }
     
 }
 
 
-extension ToDoListViewController: ToDoDetailViewControllerDelegate { }
+// MARK: - ToDoDetailViewControllerDelegate
+
+extension ToDoListViewController: ToDoDetailViewControllerDelegate {
+    
+    func didSave(_ toDo: ToDo) {
+        var snapshot = dataSource.snapshot()
+        
+        if let indexOfExistingToDo = toDos.firstIndex(of: toDo) {
+            // The user is editing an existing to-do
+            toDos[indexOfExistingToDo] = toDo
+            snapshot.reconfigureItems([toDo])
+        } else {
+            // The user is adding a new To-Do
+            toDos.append(toDo)
+            snapshot.appendItems([toDo])
+        }
+        
+        dataSource.apply(snapshot)
+        
+        ToDo.save(toDos)
+    }
+    
+}

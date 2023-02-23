@@ -19,7 +19,7 @@ protocol ToDoCellDelegate: AnyObject {
 }
 
 /// A custom cell to allow the user to toglle the `isComplete` property of the `ToDo` from the List
-final class ToDoCell: UITableViewCell {
+final class ToDoCell: UICollectionViewListCell {
     
     // MARK: - Views
     
@@ -43,11 +43,11 @@ final class ToDoCell: UITableViewCell {
     
     // MARK: - Initialization
     
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
+    override init(frame: CGRect) {
+        super.init(frame: frame)
         configureCell()
     }
-    
+        
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -116,8 +116,8 @@ final class ToDoCell: UITableViewCell {
         }
         
         // Action
-        let action = UIAction { _ in
-            self.delegate?.checkmarkTapped(sender: self)
+        let action = UIAction { [self] _ in
+            delegate?.checkmarkTapped(sender: self)
         }
         
         isCompleteButton.addAction(action, for: .primaryActionTriggered)
