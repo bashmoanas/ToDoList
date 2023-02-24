@@ -133,6 +133,21 @@ final class ToDoCell: UICollectionViewListCell {
     private func configureTitleLabel() {
         titleLabel.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
         titleLabel.numberOfLines = 0
+        titleLabel.font = UIFont.preferredFont(forTextStyle: .body)
+        titleLabel.adjustsFontForContentSizeCategory = true
+    }
+    
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        
+        let isAccessibiltyCategory = traitCollection.preferredContentSizeCategory.isAccessibilityCategory
+        
+        if isAccessibiltyCategory {
+            stackView.axis = .vertical
+        } else {
+            stackView.axis = .horizontal
+        }
     }
     
     
