@@ -66,7 +66,7 @@ final class DueDatePickerCell: UICollectionViewListCell {
     /// - Apply constraints
     /// - Add picker action using the `valueChanged` event. Each time the user scroll picking a certain date, the delegate is informed of these changes.
     private func configureDatePicker() {
-        dueDatePicker.preferredDatePickerStyle = .wheels
+        dueDatePicker.preferredDatePickerStyle = .inline
         
         contentView.addSubview(dueDatePicker)
                 
