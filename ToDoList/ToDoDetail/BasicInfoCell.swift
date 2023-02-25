@@ -148,6 +148,8 @@ final class BasicInfoCell: UICollectionViewListCell {
     private func configureTitleTextField() {
         titleTextField.borderStyle = .roundedRect
         titleTextField.placeholder = "Remind me to..."
+        titleTextField.font = .preferredFont(forTextStyle: .body)
+        titleTextField.adjustsFontForContentSizeCategory = true
         
         titleTextField.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
         
@@ -163,6 +165,17 @@ final class BasicInfoCell: UICollectionViewListCell {
         }
         
         titleTextField.addAction(returnTappedAction, for: .primaryActionTriggered)
+    }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        let isAccessibiltyCategory = traitCollection.preferredContentSizeCategory.isAccessibilityCategory
+        
+        if isAccessibiltyCategory {
+            stackView.axis = .vertical
+        } else {
+            stackView.axis = .horizontal
+        }
     }
     
     
