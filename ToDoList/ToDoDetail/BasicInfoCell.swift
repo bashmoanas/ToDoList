@@ -173,6 +173,7 @@ final class BasicInfoCell: UICollectionViewListCell {
         
         if isAccessibiltyCategory {
             stackView.axis = .vertical
+            stackView.alignment = .center
         } else {
             stackView.axis = .horizontal
         }
