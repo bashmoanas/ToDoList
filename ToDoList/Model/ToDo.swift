@@ -55,14 +55,6 @@ struct ToDo: Hashable, Codable {
     var notes: String?
     
     
-    // MARK: - Static Properties
-    
-    /// Get the documents directory
-    static let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
-    
-    /// Create a folder for the ToDo app to store its data.
-    static let archiveURL = documentsDirectory.appending(path: "todos").appendingPathExtension("plist")
-    
     // MARK: - Initialization
     
     /// In order to implement the `Codable` protocol, `id` should not have a default value, or it can be turned into var, or which what is done here have an init and give `id` the default value it needs and keeps the `id` constant
@@ -72,48 +64,6 @@ struct ToDo: Hashable, Codable {
         self.isComplete = isComplete
         self.dueDate = dueDate
         self.notes = notes
-    }
-    
-    
-    // MARK: - Static Methods
-    
-    /// Save ToDos
-    ///
-    /// Use this method to save the user-eneterd to-dos
-    /// - Note: Must save all to-dos at once. Do not use to save each to-do alone.
-    /// - Parameter toDos: A toDo array you need to save
-    static func save(_ toDos: [ToDo]) {
-        let propertyListEncoder = PropertyListEncoder()
-        let codedToDos = try? propertyListEncoder.encode(toDos)
-        try? codedToDos?.write(to: archiveURL, options: .noFileProtection)
-    }
-    
-    /// Load saved previously save to-dos
-    ///
-    /// Each new to-do should be saved on disk. Use this method to retrive those todos back
-    /// - Returns: Saved to-dos if there is any, `nil` otherwise
-    static func loadToDos() -> [ToDo]? {
-        guard let codedToDos = try? Data(contentsOf: archiveURL) else {
-            return nil
-        }
-        
-        let propertyListDecoder = PropertyListDecoder()
-        return try? propertyListDecoder.decode([ToDo].self, from: codedToDos)
-    }
-    
-    /// Load sample to-dos for **DEBUG** reasons
-    /// - Returns: Some sample to-dos
-    static func loadSampleToDos() -> [ToDo] {
-        let toDo1 = ToDo(title: "Renew the ID", isComplete: false, dueDate: Date(), notes: "The ID expires next month. I need to buy a form and submit it as soon as I could.")
-        let toDo2 = ToDo(title: "Call my brother", isComplete: false, dueDate: Date(), notes: "Discuss the latest Apple announcements")
-        let toDo3 = ToDo(title: "Read The Swift Programming Language Book", isComplete: false, dueDate: Date())
-        let toDo4 = ToDo(title: "Watch Ted Lasso", isComplete: false, dueDate: Date(), notes: "Watch season 1 and season 2 before season 3 is out")
-        let toDo5 = ToDo(title: "Finish that app", isComplete: false, dueDate: Date(), notes: "Just ship it. No more refinements.")
-        let toDo6 = ToDo(title: "Work at Apple", isComplete: false, dueDate: Date(), notes: "If they can ship those bugs that affects millions, why can't I")
-        let toDo7 = ToDo(title: "Visit all 27 Egypt's governorates", isComplete: false, dueDate: Date())
-        
-        
-        return [toDo1, toDo2, toDo3, toDo4, toDo5, toDo6, toDo7]
     }
     
     

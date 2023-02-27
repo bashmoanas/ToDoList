@@ -118,8 +118,6 @@ final class ToDoListViewController: UIViewController {
                 toDoStore.remove(toDoToDelete)
                 
                 completion(true)
-                
-                ToDo.save(toDoStore.allToDos)
             }
             return UISwipeActionsConfiguration(actions: [deleteAction])
         }
@@ -207,8 +205,6 @@ extension ToDoListViewController: ToDoCellDelegate {
             var snapshot = dataSource.snapshot()
             snapshot.reconfigureItems([toDo])
             dataSource.apply(snapshot)
-            
-            ToDo.save(toDoStore.allToDos)
         }
     }
     
@@ -233,8 +229,6 @@ extension ToDoListViewController: ToDoDetailViewControllerDelegate {
         }
         
         dataSource.apply(snapshot, animatingDifferences: true)
-        
-        ToDo.save(toDoStore.allToDos)
     }
     
 }
