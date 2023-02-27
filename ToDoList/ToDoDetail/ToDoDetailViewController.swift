@@ -116,6 +116,13 @@ final class ToDoDetailViewController: UIViewController {
         applySnapshot(animatingDifferences: false)
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        // To dismiss the keyboard more smoothly when the view is about to disappear
+        view.endEditing(true)
+    }
+        
     
     // MARK: - Private Methods
     
@@ -136,6 +143,7 @@ final class ToDoDetailViewController: UIViewController {
     private func configureNavigationBar() {
         navigationItem.largeTitleDisplayMode = .never
         navigationItem.rightBarButtonItem = saveButton
+        navigationItem.title = "Details"
     }
     
     /// Add the saving capabilties to the `saveButton`
