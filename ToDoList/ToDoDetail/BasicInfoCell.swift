@@ -77,6 +77,19 @@ final class BasicInfoCell: UICollectionViewListCell {
         configureTitleTextField()
     }
     
+    /// Updates the stack view appearance bases on the current trait collection
+    ///
+    /// If the user has enabled the larger accessibility sizes, the stack view axis should be vertical and its alignment center,
+    private func updateStackViewBasedOnTraitCollection() {
+        let isAccessibiltyCategory = traitCollection.preferredContentSizeCategory.isAccessibilityCategory
+        if isAccessibiltyCategory {
+            stackView.axis = .vertical
+            stackView.alignment = .center
+        } else {
+            stackView.axis = .horizontal
+        }
+    }
+    
     /// Configure the `stackView`
     ///
     /// - Add the `stackView` as subview to the content view.
@@ -87,6 +100,7 @@ final class BasicInfoCell: UICollectionViewListCell {
         contentView.addSubview(stackView)
         
         stackView.spacing = 8
+        updateStackViewBasedOnTraitCollection()
         
         // Add arranged subviews
         stackView.addArrangedSubview(isCompleteButton)
@@ -169,14 +183,7 @@ final class BasicInfoCell: UICollectionViewListCell {
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
-        let isAccessibiltyCategory = traitCollection.preferredContentSizeCategory.isAccessibilityCategory
-        
-        if isAccessibiltyCategory {
-            stackView.axis = .vertical
-            stackView.alignment = .center
-        } else {
-            stackView.axis = .horizontal
-        }
+        updateStackViewBasedOnTraitCollection()
     }
     
     
