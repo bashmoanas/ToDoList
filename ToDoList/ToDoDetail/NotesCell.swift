@@ -65,6 +65,9 @@ final class NotesCell: UICollectionViewListCell {
     private func configureNotesTextView() {
         contentView.addSubview(notesTextView)
         
+        notesTextView.adjustsFontForContentSizeCategory = true
+        notesTextView.font = .preferredFont(forTextStyle: .body)
+        
         notesTextView.delegate = self
                 
         // Add Constraints
