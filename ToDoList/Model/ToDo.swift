@@ -136,7 +136,4 @@ struct ToDo: Hashable, Codable {
         hasher.combine(id)
     }
     
-    
-    static let defaultToDo = ToDo(title: "New Reminder", isComplete: false, dueDate: Date().addingTimeInterval(24*60*60))
-    
 }

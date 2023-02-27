@@ -32,17 +32,26 @@ final class ToDoListViewController: UIViewController {
     
     // MARK: - Properties
     
-    /// A list of all the to-dos the user has added to the application
-    private var toDos = [ToDo]()
+    /// The To-do store containing the data source of truth and is responsible for operations like adding and deleting to-dos
+    var toDoStore: ToDoStore
+    
+    
+    // MARK: - Initialization
+    
+    init(toDoStore: ToDoStore) {
+        self.toDoStore = toDoStore
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     
     // MARK: - View Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        // Provide sample data
-        toDos = ToDo.loadToDos() ?? ToDo.loadSampleToDos()
         
         configureView()
         applySnapshot(animatingDifferences: false)
@@ -79,7 +88,8 @@ final class ToDoListViewController: UIViewController {
     /// - note: I call both `dismiss(animated:completion)` and `popViewController(animated:)`. From my testing one does not affect the other. The `dismiss(animated:completion)` is called by the presenting view controller, so if the view controller was presented using a `UINavigationController` the `dismiss` method does nothing and vice versa.
     private func configureAddButton() {
         let action = UIAction { [self] _ in
-            let toDoDetailViewController = ToDoDetailViewController(toDo: ToDo.defaultToDo)
+            let newToDo = ToDo(title: "New Reminder", isComplete: false, dueDate: Date())
+            let toDoDetailViewController = ToDoDetailViewController(toDo: newToDo)
             toDoDetailViewController.delegate = self
             let navigationController = UINavigationController(rootViewController: toDoDetailViewController)
             
@@ -99,12 +109,17 @@ final class ToDoListViewController: UIViewController {
         // Add swipe to delete
         configuration.trailingSwipeActionsConfigurationProvider = { indexPath in
             let deleteAction = UIContextualAction(style: .destructive, title: "Delete") { [self] action, view, completion in
+                let toDoToDelete = toDoStore.allToDos[indexPath.item]
+                
                 var snapshot = dataSource.snapshot()
-                snapshot.deleteItems([toDos[indexPath.item]])
+                snapshot.deleteItems([toDoToDelete])
                 dataSource.apply(snapshot)
-                toDos.remove(at: indexPath.item)
+                
+                toDoStore.remove(toDoToDelete)
+                
                 completion(true)
-                ToDo.save(toDos)
+                
+                ToDo.save(toDoStore.allToDos)
             }
             return UISwipeActionsConfiguration(actions: [deleteAction])
         }
@@ -133,7 +148,7 @@ final class ToDoListViewController: UIViewController {
     
     private func registerCellForToDo() -> UICollectionView.CellRegistration<ToDoCell, ToDo> {
         return UICollectionView.CellRegistration<ToDoCell, ToDo> { [self] cell, indexPath, _ in
-            let toDo = toDos[indexPath.row]
+            let toDo = toDoStore.allToDos[indexPath.row]
             cell.delegate = self
             cell.update(with: toDo)
         }
@@ -154,7 +169,7 @@ final class ToDoListViewController: UIViewController {
     private func applySnapshot(animatingDifferences: Bool = true) {
         var snapshot = NSDiffableDataSourceSnapshot<Section, ToDo>()
         snapshot.appendSections([.main])
-        snapshot.appendItems(toDos, toSection: .main)
+        snapshot.appendItems(toDoStore.allToDos, toSection: .main)
         dataSource.apply(snapshot, animatingDifferences: animatingDifferences)
     }
     
@@ -168,7 +183,7 @@ extension ToDoListViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         collectionView.deselectItem(at: indexPath, animated: true)
         
-        let toDo = toDos[indexPath.row]
+        let toDo = toDoStore.allToDos[indexPath.row]
         
         // Navigate to ToDoDetailViewController
         let toDoDetailViewController = ToDoDetailViewController(toDo: toDo)
@@ -185,15 +200,15 @@ extension ToDoListViewController: ToDoCellDelegate {
     
     func checkmarkTapped(sender: ToDoCell) {
         if let indexPath = collectionView.indexPath(for: sender) {
-            toDos[indexPath.row].isComplete.toggle()
+            toDoStore.allToDos[indexPath.row].isComplete.toggle()
             
-            let toDo = toDos[indexPath.row]
+            let toDo = toDoStore.allToDos[indexPath.row]
             
             var snapshot = dataSource.snapshot()
             snapshot.reconfigureItems([toDo])
             dataSource.apply(snapshot)
             
-            ToDo.save(toDos)
+            ToDo.save(toDoStore.allToDos)
         }
     }
     
@@ -207,19 +222,19 @@ extension ToDoListViewController: ToDoDetailViewControllerDelegate {
     func didSave(_ toDo: ToDo) {
         var snapshot = dataSource.snapshot()
         
-        if let indexOfExistingToDo = toDos.firstIndex(of: toDo) {
+        if let indexOfExistingToDo = toDoStore.allToDos.firstIndex(of: toDo) {
             // The user is editing an existing to-do
-            toDos[indexOfExistingToDo] = toDo
+            toDoStore.allToDos[indexOfExistingToDo] = toDo
             snapshot.reconfigureItems([toDo])
         } else {
             // The user is adding a new To-Do
-            toDos.append(toDo)
+            toDoStore.addNew(toDo)
             snapshot.appendItems([toDo])
         }
         
-        dataSource.apply(snapshot)
+        dataSource.apply(snapshot, animatingDifferences: true)
         
-        ToDo.save(toDos)
+        ToDo.save(toDoStore.allToDos)
     }
     
 }

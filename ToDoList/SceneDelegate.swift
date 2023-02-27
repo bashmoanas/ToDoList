@@ -18,8 +18,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: windowScene)
-        let toDoListViewController = ToDoListViewController()
+        
+        // Create a toDoStore
+        let toDoStore = ToDoStore()
+        
+        // Access the ToDoListViewController and set its toDo store
+        let toDoListViewController = ToDoListViewController(toDoStore: toDoStore)
         let navigationController = UINavigationController(rootViewController: toDoListViewController)
+        
         window?.rootViewController = navigationController
         window?.makeKeyAndVisible()
     }
