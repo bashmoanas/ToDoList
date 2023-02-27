@@ -67,16 +67,17 @@ final class NotesCell: UICollectionViewListCell {
         
         notesTextView.adjustsFontForContentSizeCategory = true
         notesTextView.font = .preferredFont(forTextStyle: .body)
+        notesTextView.backgroundColor = .tertiarySystemFill
         
         notesTextView.delegate = self
                 
         // Add Constraints
         notesTextView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            notesTextView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            notesTextView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            notesTextView.topAnchor.constraint(equalTo: contentView.topAnchor),
-            notesTextView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+            notesTextView.leadingAnchor.constraint(equalTo: contentView.layoutMarginsGuide.leadingAnchor),
+            notesTextView.trailingAnchor.constraint(equalTo: contentView.layoutMarginsGuide.trailingAnchor),
+            notesTextView.topAnchor.constraint(equalTo: contentView.layoutMarginsGuide.topAnchor),
+            notesTextView.bottomAnchor.constraint(equalTo: contentView.layoutMarginsGuide.bottomAnchor),
             
             // Specify the height of the notes text view
             notesTextView.heightAnchor.constraint(equalToConstant: 200)

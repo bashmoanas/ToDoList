@@ -105,6 +105,7 @@ final class ToDoListViewController: UIViewController {
     /// - Returns: a collection view using the list configuration layout.
     private func makeCollectionView() -> UICollectionView {
         var configuration = UICollectionLayoutListConfiguration(appearance: .plain)
+        configuration.backgroundColor = UIColor(named: "PrimaryBrandFillColor")
         
         // Add swipe to delete
         configuration.trailingSwipeActionsConfigurationProvider = { indexPath in
@@ -146,6 +147,10 @@ final class ToDoListViewController: UIViewController {
     
     private func registerCellForToDo() -> UICollectionView.CellRegistration<ToDoCell, ToDo> {
         return UICollectionView.CellRegistration<ToDoCell, ToDo> { [self] cell, indexPath, _ in
+            var backgroundConfiguration = cell.defaultBackgroundConfiguration()
+            backgroundConfiguration.backgroundColor = UIColor(named: "PrimaryBrandFillColor")
+            cell.backgroundConfiguration = backgroundConfiguration
+            
             let toDo = toDoStore.allToDos[indexPath.row]
             cell.delegate = self
             cell.update(with: toDo)

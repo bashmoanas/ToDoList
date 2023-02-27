@@ -165,6 +165,7 @@ final class BasicInfoCell: UICollectionViewListCell {
         titleTextField.font = .preferredFont(forTextStyle: .body)
         titleTextField.adjustsFontForContentSizeCategory = true
         titleTextField.returnKeyType = .done
+        titleTextField.backgroundColor = .tertiarySystemFill
         
         titleTextField.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
         

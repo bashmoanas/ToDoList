@@ -165,7 +165,8 @@ final class ToDoDetailViewController: UIViewController {
     
     /// Initialize the collection view using the list configuration layout
     private func makeCollectionView() -> UICollectionView {
-        var configuration = UICollectionLayoutListConfiguration(appearance: .grouped)
+        var configuration = UICollectionLayoutListConfiguration(appearance: .plain)
+        configuration.backgroundColor = UIColor(named: "PrimaryBrandFillColor")
         configuration.headerMode = .supplementary
         return UICollectionView(frame: view.bounds, collectionViewLayout: UICollectionViewCompositionalLayout.list(using: configuration))
     }
@@ -230,6 +231,10 @@ final class ToDoDetailViewController: UIViewController {
     private func registerCellForBasicInformation() -> UICollectionView.CellRegistration<BasicInfoCell, ItemType> {
         let cellRegistration = UICollectionView.CellRegistration<BasicInfoCell, ItemType> { [self] cell, indexPath, item in
             if case .basicInformation(_) = item {
+                var backgroundConfiguration = cell.defaultBackgroundConfiguration()
+                backgroundConfiguration.backgroundColor = UIColor(named: "PrimaryBrandFillColor")
+                cell.backgroundConfiguration = backgroundConfiguration
+                
                 cell.delegate = self
                 cell.update(with: toDo)
             }
@@ -251,6 +256,10 @@ final class ToDoDetailViewController: UIViewController {
                 
                 cell.contentConfiguration = content
             }
+            
+            var backgroundConfiguration = cell.defaultBackgroundConfiguration()
+            backgroundConfiguration.backgroundColor = UIColor(named: "PrimaryBrandFillColor")
+            cell.backgroundConfiguration = backgroundConfiguration
         }
         return cellRegistration
     }
@@ -260,6 +269,10 @@ final class ToDoDetailViewController: UIViewController {
     private func registerCellFordueDatePicker() -> UICollectionView.CellRegistration<DueDatePickerCell, ItemType> {
         let cellRegistration = UICollectionView.CellRegistration<DueDatePickerCell, ItemType> { [self] cell, _, item in
             if case .dueDatePicker(_) = item {
+                var backgroundConfiguration = cell.defaultBackgroundConfiguration()
+                backgroundConfiguration.backgroundColor = UIColor(named: "PrimaryBrandFillColor")
+                cell.backgroundConfiguration = backgroundConfiguration
+                
                 cell.delegate = self
                 cell.update(with: toDo.dueDate)
             }
@@ -272,6 +285,10 @@ final class ToDoDetailViewController: UIViewController {
     private func registerCellForNotes() -> UICollectionView.CellRegistration<NotesCell, ItemType> {
         let cellRegistration = UICollectionView.CellRegistration<NotesCell, ItemType> { [self] cell, indexPath, item in
             if case .notes(_) = item {
+                var backgroundConfiguration = cell.defaultBackgroundConfiguration()
+                backgroundConfiguration.backgroundColor = UIColor(named: "PrimaryBrandFillColor")
+                cell.backgroundConfiguration = backgroundConfiguration
+                
                 cell.delegate = self
                 cell.update(with: toDo.notes)
             }
