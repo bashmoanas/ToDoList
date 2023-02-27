@@ -64,6 +64,16 @@ final class ToDoCell: UICollectionViewListCell {
         configureTitleLabel()
     }
     
+    private func updateStackViewBasedOnTraitCollection() {
+        let isAccessibiltyCategory = traitCollection.preferredContentSizeCategory.isAccessibilityCategory
+        
+        if isAccessibiltyCategory {
+            stackView.axis = .vertical
+        } else {
+            stackView.axis = .horizontal
+        }
+    }
+    
     /// Configure the `stackView`
     ///
     /// - Add the subview as subview to the content view.
@@ -74,6 +84,7 @@ final class ToDoCell: UICollectionViewListCell {
         contentView.addSubview(stackView)
         
         stackView.spacing = 8
+        updateStackViewBasedOnTraitCollection()
         
         // To align the `iCompleteButton` with the top line of the a multi-line to-do `title`.
         stackView.alignment = .leading
@@ -141,13 +152,7 @@ final class ToDoCell: UICollectionViewListCell {
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
         
-        let isAccessibiltyCategory = traitCollection.preferredContentSizeCategory.isAccessibilityCategory
-        
-        if isAccessibiltyCategory {
-            stackView.axis = .vertical
-        } else {
-            stackView.axis = .horizontal
-        }
+        updateStackViewBasedOnTraitCollection()
     }
     
     
