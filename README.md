@@ -11,6 +11,11 @@ A ToDo manager app that manages a list of to-dos and stores it for later retriev
 - Swipe to delete the to-do.
 - Tap on to-do to navigate to the to-do detail screen, where you can modify the to-do information.
 
+![ToDoListApp](https://github.com/bashmoanas/ToDoList/assets/34455425/cb97162c-48b4-404f-b6ff-0541b95b4b62)
+![ToDoDetails](https://github.com/bashmoanas/ToDoList/assets/34455425/63242d13-d60c-404c-93f7-f3c746adc6fd)
+![ToDoEditMode](https://github.com/bashmoanas/ToDoList/assets/34455425/b060a68f-5612-47ea-bda2-869397a3b560)
+![ToDoListInDarkMode](https://github.com/bashmoanas/ToDoList/assets/34455425/93a7afc3-1276-4423-bd40-03d21ccbd5e8)
+
 
 ## Architecture
 
